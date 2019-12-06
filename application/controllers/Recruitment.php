@@ -31,19 +31,17 @@ class Recruitment extends CI_Controller {
 
 	public function personal_insert(){
 
+		//print_r($_GET); die();
 		if($_GET){
-			 $this->rm->Insert_Update_personal($_GET);
- 
+			 $this->rm->Insert_Update_personal($_GET); 
 		}
 
 		/*if($this->input->post('personal_id')==0){
 			       echo '<pre>';
 				   print_r($_POST); die();
 				   echo '</pre>';
-
 				   $result = $this->rm->insert_personal($data);
 		}else{
-
 			       echo '<pre>';
 				   print_r($_POST); die();
 				   echo '</pre>';
@@ -52,33 +50,78 @@ class Recruitment extends CI_Controller {
 	}
 
 	public function communication_insert(){
+		$insert_array = array();
+				  
+		if($_GET){
+			
+			for($i=0; $i<count($_GET['type_of_address']); $i++){
 
+				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'type_of_address'=>$_GET['type_of_address'][$i],'phone_no'=>$_GET['addr_phone_no'][$i],'street_address'=>$_GET['street_address'][$i],'city'=>$_GET['city'][$i],'state'=>$_GET['state'][$i],'country'=>$_GET['country'][$i],'pin_no'=>$_GET['pin_no'][$i]);					
+			}				
+		}
+
+		//print_r($_GET); die();	 
+
+		$this->rm->Insert_communication($insert_array,$_GET['personal_id']); 
+	}
+
+	public function education_insert(){
+		$insert_array = array();
+			  
+		if($_GET){
 		
+			for($i=0; $i<count($_GET['degree']); $i++){
 
-				if($_GET){
-				$this->rm->Insert_Update_communication($_GET); 
-				}
+				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'degree'=>$_GET['degree'][$i],'specialization'=>$_GET['subject'][$i],'college'=>$_GET['college'][$i],'mos'=>$_GET['mos'][$i], 'aff_university'=>$_GET['aff_university'][$i],'yop'=>$_GET['yop'][$i],'percentage'=>$_GET['percentage'][$i]);					
+			}				
+		}
+		 
+		$this->rm->Insert_education($insert_array,$_GET['personal_id']); 
+	}
 
-					// for($i=0; $i<count($_GET['type_of_address']); $i++){
+	public function experience_insert(){
+		$insert_array = array();
 
-					// 	$update_array = array('personal_id'=>$_GET['per_com_id'],'com_id'=>$_GET['com_id'][$i],'type_of_address'=>$_GET['type_of_address'][$i],'phone_no'=>$_GET['phone_no'][$i],
-					// 	'street_address'=>$_GET['street_address'][$i],
-					// 	'city'=>$_GET['city'][$i],'state'=>$_GET['state'][$i],
-					// 	'country'=>$_GET['country'][$i],'pin_no'=>$_GET['pin_no'][$i]);
+		//print_r($_GET); die();
+		if($_GET){
+			
+			for($i=0; $i<count($_GET['exp_college']); $i++){
+				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'exp_college'=>$_GET['exp_college'][$i],'university'=>$_GET['university'][$i],'designation'=>$_GET['designation'][$i],'doj'=>$_GET['doj'][$i], 'dol'=>$_GET['dol'][$i],'doe'=>$_GET['doe'][$i]);					
+			}			
+		  $this->rm->Insert_experience($insert_array,$_GET['personal_id']); 
+		}
+	}
 
-					// 	print_r($update_array);
-						
-					// }
-				
+	public function achievement_insert(){
+		$insert_array = array();
 
-				die();
+		//print_r($_GET); die();
+		if($_GET){
+			
+			//for($i=0; $i<count($_GET['set_net']); $i++){
+				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'set_net'=>$_GET['set_net'],'nat_journals'=>$_GET['nat_journals'],'int_journals'=>$_GET['int_journals'],'sem_journals'=>$_GET['sem_journals'], 'published_book'=>$_GET['published_book'],'known_languages'=>$_GET['known_languages']
+				,'eng_read'=>$_GET['eng_read'],'eng_speak'=>$_GET['eng_speak'],'eng_write'=>$_GET['eng_write'],'typing_tamil'=>$_GET['typing_tamil'],'typing_english'=>$_GET['typing_english'],'comp_knowledge'=>$_GET['comp_knowledge']);					
+			//}		
+			
+			//print_r($insert_array); die();
+		  $this->rm->Insert_achievement($insert_array,$_GET['personal_id']); 
+		}
+	}
 
+	public function joining_insert(){
+		$insert_array = array();
+		print_r($_GET); die();
+		if($_GET){
+			
+			for($i=0; $i<count($_GET['exp_college']); $i++){
+				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'exp_college'=>$_GET['exp_college'][$i],'university'=>$_GET['university'][$i],'designation'=>$_GET['designation'][$i],'doj'=>$_GET['doj'][$i], 'dol'=>$_GET['dol'][$i],'doe'=>$_GET['doe'][$i]);					
+			}			
+		  $this->rm->Insert_experience($insert_array,$_GET['personal_id']); 
+		}
 	}
 
 	public function check_phone_exist1(){ //receives ajax requests
-		echo '<pre>';
-		print_r($_POST);
-		echo '</pre>';
+
         $isPhone = $this->input->post('phone');
 		$result = $this->rm->check_PhoneExist($isPhone); //sending ajax data to model
 		if($result)
@@ -103,15 +146,13 @@ class Recruitment extends CI_Controller {
 				// 	'mobile'        => $this->input->post('phone'),
 				// 	'status'        => $this->input->post('status')
 				// 	);
-
-				  $result = $this->rm->insert_data($data);
-					
+				  $result = $this->rm->insert_data($data);					
 				  $this->session->set_flashdata('added','Staff information updated successfully.');
 			//}else{
-				  //echo '<pre>';
-				  //print_r($response); die();
-				 // $this->session->set_flashdata('added','You are a robot, Please try again?');
-				 // $this->load->view('welcome_staff');
+				 //echo '<pre>';
+				 //print_r($response); die();
+				 //$this->session->set_flashdata('added','You are a robot, Please try again?');
+				 //$this->load->view('welcome_staff');
 				//}
 		
 		}

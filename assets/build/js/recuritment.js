@@ -58,8 +58,7 @@ $(document).ready(function () {
                     type: "POST",
                     url: "recruitment/check_user_exist",
                     data: { "email_id": email, "phone_no": phone },
-                    success: function (res) {
-                        //alert(res);                                   
+                    success: function (res) {                                  
 
                         if (res == 0 || res == '0') {
                             console.log(res);
@@ -67,8 +66,7 @@ $(document).ready(function () {
                         } else {
 
                             var json_personal = JSON.parse(res);
-
-                            console.log(json_personal);
+                            //console.log(json_personal);
 
                             $('#personal_id').val(json_personal['personal_id']);
                             $('#first_name').val(json_personal['first_name']);
@@ -118,7 +116,6 @@ $(document).ready(function () {
 
                 $("#email_verify").text(""); /*css({ "background-image" "none" })*/
                 $('.error').text("");
-
             }
         }
 
@@ -131,7 +128,7 @@ $(document).ready(function () {
         next_fs = $(this).parent().next();
 
         var personal_form = $('.personalInfo').serialize();
-    
+
         $.ajax({
             type: "GET",
             url: "recruitment/personal_insert?" + personal_form,
@@ -144,13 +141,11 @@ $(document).ready(function () {
                     console.log(data);
                 } else {
                     //alert(data + " Suresh LS");
-                    console.log(JsonData);
+                    //console.log(JsonData);                    
 
-                    $('#per_com_id').val(JsonData['personal_id']);
-
-                    if(!($.isEmptyObject(JsonData['communication'][0]))){
-                        $('#type_of_address_1').val(JsonData['communication'][0]['type_of_address']);
-                        $('#com_id').val(JsonData['communication'][0]['com_id']);                    
+                    if(!($.isEmptyObject(JsonData['communication'][0]))){                  
+                        
+                        $('#type_of_address_1').val(JsonData['communication'][0]['type_of_address']);                    
                         $('#phone_no_1').val(JsonData['communication'][0]['phone_no']);
                         $('#street_address_1').val(JsonData['communication'][0]['street_address']);
                         $("select option[value='" + JsonData['communication'][0]['city'] + "']").attr('selected', true);
@@ -158,9 +153,10 @@ $(document).ready(function () {
                         $('#pin_no_1').val(JsonData['communication'][0]['pin_no']);
                        
                     }
+
                     if(!($.isEmptyObject(JsonData['communication'][1]))){
-                        $('#type_of_address_2').val(JsonData['communication'][1]['type_of_address']);
-                        $('#com_id_2').val(JsonData['communication'][1]['com_id']);
+                        
+                        $('#type_of_address_2').val(JsonData['communication'][1]['type_of_address']);  
                         $('#phone_no_2').val(JsonData['communication'][1]['phone_no']);
                         $('#street_address_2').val(JsonData['communication'][1]['street_address']);
                         $("select option[value='" + JsonData['communication'][1]['city'] + "']").attr('selected', true);
@@ -199,27 +195,56 @@ $(document).ready(function () {
     
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();
-    
+            var personal_id = $('#personal_id').val();
+
             var communication_form = $('.communicationInfo').serialize();
-        
+
             $.ajax({
                 type: "GET",
-                url: "recruitment/communication_insert?" + communication_form,
+                url: "recruitment/communication_insert?" + communication_form + '&personal_id='+personal_id,
                 //data: form.serialize(), // <--- THIS IS THE CHANGE        
                 success: function (data) {
 
-                    console.log(data);
-                    // var JsonData = JSON.parse(data);
+                    var JsonData = JSON.parse(data);
+        
+                    if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
+                        console.log(data);
+                    } else {
+                         //console.log(JsonData['education'].length);                        
 
-                    // console.log(JsonData);
+                        if(!($.isEmptyObject(JsonData['education']))){
+
+                            for(i=0; i<JsonData['education'].length; i++){
+                                if(i == 0){
+                                $('#degree').val(JsonData['education'][i]['degree']);
+                                $('#subject').val(JsonData['education'][i]['specialization']);
+                                $('#college').val(JsonData['education'][i]['college']);
+                                $('#mos').val(JsonData['education'][i]['mos']);
+                                $('#aff_university').val(JsonData['education'][i]['aff_university']);
+                                $('#yop').val(JsonData['education'][i]['yop']);
+                                $('#percentage').val(JsonData['education'][i]['percentage']);
+                                }else{
+                                    var SNo = i + 1;
+                                    var row = $("<tr class='removeClassEdu_"+SNo+"'>");
+                                    $("#edu_fields").append(row); //this will append tr element to table.
+                                    row.append($('<td>' + SNo + '</td>'));
+                                    row.append($("<td><input type='text' name='degree[]' class='form-control val2' id='degree' value='"+ JsonData['education'][i]['degree'] +"' placeholder='Enter Degree'></td>"));
+                                    row.append($("<td><input type='text' name='subject[]' class='form-control val2' id='subject' value='"+ JsonData['education'][i]['specialization'] +"' placeholder='Enter Specialization'></td>"));
+                                    row.append($("<td><input type='text' name='college[]' class='form-control val2' id='college' value='"+ JsonData['education'][i]['college'] +"' placeholder='Enter Subject'></td>"));
+                                    row.append($("<td><input type='text' name='mos[]' class='form-control val2' id='mos' value='"+ JsonData['education'][i]['mos'] +"' placeholder='Enter Mode of Study'></td>"));
+                                    row.append($("<td><input type='text' name='aff_university[]' class='form-control val2' id='aff_university' value='"+ JsonData['education'][i]['aff_university'] +"' placeholder='Enter University'></td>"));
+                                    row.append($("<td><input type='text' name='yop[]' class='form-control val2' id='yop' value='"+ JsonData['education'][i]['yop'] +"' placeholder='Enter Year of Passing'></td>"));
+                                    row.append($("<td><input type='text' name='percentage[]' class='form-control val2' id='percentage' value='"+ JsonData['education'][i]['percentage'] +"' placeholder='Enter Percentage'></td>"));
+                                    row.append($("<td><button class='btn btn-sm btn-danger' type='button' onclick='remove_edu_fields("+SNo+");'> <span class='fa fa-trash' aria-hidden='true'></span> </button></td>"));
+                                    row.append($('</tr>'));
+                                }
+                            } 
+                            
+                            eduId = parseInt(JsonData['education'].length);
+
+                        }                       
+                    }    
         
-                    // if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
-                    //     console.log(data);
-                    // } else {
-                    //     console.log(data);
-                    // }    
-        
-                    $('#personal_id').val(data['personal_id']);
                     //Add Class Active
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                     //show the next fieldset
@@ -242,6 +267,254 @@ $(document).ready(function () {
                 error: function () { alert("Error posting feed."); }
             });
         
+            //return false;
+        });
+
+        $("#educationInfo").click(function (){
+            //function insert_personal() {
+        
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+                var personal_id = $('#personal_id').val();
+    
+                var education_form = $('.educationInfo').serialize();
+    
+                $.ajax({
+                    type: "GET",
+                    url: "recruitment/education_insert?" + education_form + '&personal_id='+personal_id,
+                    //data: form.serialize(), // <--- THIS IS THE CHANGE        
+                    success: function (data) {    
+                        //console.log(data);
+                        var JsonData = JSON.parse(data);
+            
+                        if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
+                            console.log(data);
+                        } else {
+                            //console.log(JsonData);                   
+                            if(!($.isEmptyObject(JsonData['experience']))){                                                    
+    
+                                for(i=0; i<JsonData['experience'].length; i++){
+                                    if(i == 0){
+                                    $('#exp_college').val(JsonData['experience'][i]['exp_college']);
+                                    $('#university').val(JsonData['experience'][i]['university']);
+                                    $('#designation').val(JsonData['experience'][i]['designation']);
+                                    $('#doj').val(JsonData['experience'][i]['doj']);
+                                    $('#dol').val(JsonData['experience'][i]['dol']);
+                                    $('#doe').val(JsonData['experience'][i]['doe']);
+                                    }else{
+                                        var SNo = i + 1;
+                                        var row = $("<tr class='removeClassExp_"+SNo+"'>");
+                                        $("#exp_fields").append(row); //this will append tr element to table.
+                                        row.append($('<td>' + SNo + '</td>'));
+                                        row.append($("<td><input type='text' name='exp_college[]' class='form-control' id='exp_college' value='"+ JsonData['experience'][i]['exp_college'] +"' placeholder='Enter Exp. College'></td>"));
+                                        row.append($("<td><input type='text' name='university[]' class='form-control' id='university' value='"+ JsonData['experience'][i]['university'] +"' placeholder='Enter University'></td>"));
+                                        row.append($("<td><input type='text' name='designation[]' class='form-control' id='designation' value='"+ JsonData['experience'][i]['designation'] +"' placeholder='Enter Designation'></td>"));
+                                        row.append($("<td><input type='text' name='doj[]' class='form-control' id='doj' value='"+ JsonData['experience'][i]['dol'] +"' placeholder='Date of Joining'></td>"));
+                                        row.append($("<td><input type='text' name='dol[]' class='form-control' id='dol' value='"+ JsonData['experience'][i]['dol'] +"' placeholder='Date of Leaving'></td>"));
+                                        row.append($("<td><input type='text' name='doe[]' class='form-control' id='doe' value='"+ JsonData['experience'][i]['doe'] +"' placeholder='Date of Experience'></td>"));                                        
+                                        row.append($("<td><button class='btn btn-sm btn-danger' type='button' onclick='remove_exp_fields("+SNo+");'> <span class='fa fa-trash' aria-hidden='true'></span> </button></td>"));
+                                        row.append($('</tr>'));
+                                    }
+                                } 
+          
+                                expId = parseInt(JsonData['experience'].length);
+                            }                       
+                        }    
+            
+                        //Add Class Active
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        //show the next fieldset
+                        next_fs.show();
+                        //hide the current fieldset with style
+                        current_fs.animate({ opacity: 0 }, {
+                            step: function (now) {
+                                // for making fielset appear animation
+                                opacity = 1 - now;
+            
+                                current_fs.css({
+                                    'display': 'none',
+                                    'position': 'relative'
+                                });
+                                next_fs.css({ 'opacity': opacity });
+                            },
+                            duration: 600
+                        });
+                    },
+                    error: function () { alert("Error posting feed."); }
+                });
+            
+            //return false;
+        });
+    
+        $("#experienceInfo").click(function (){
+            //function insert_personal() {
+        
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+                var personal_id = $('#personal_id').val();
+    
+                var experienceInfo = $('.experienceInfo').serialize();
+    
+                $.ajax({
+                    type: "GET",
+                    url: "recruitment/experience_insert?" + experienceInfo + '&personal_id='+personal_id,
+                    //data: form.serialize(), // <--- THIS IS THE CHANGE        
+                    success: function (data) {
+
+                        var JsonData = JSON.parse(data);                         
+            
+                        if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
+                            console.log(JsonData);
+                        } else {
+                            //console.log(JsonData['achievement'][0]['eng_speak']);
+
+                            if(JsonData['achievement'][0]['set_net'] == undefined){
+                            $(".set_net[value=" + JsonData['achievement']['set_net'] + "]").attr('checked', true);
+                            $(".nat_journals option[value='" + JsonData['achievement']['nat_journals'] + "']").attr('selected', true);
+                            $(".int_journals option[value='" + JsonData['achievement']['int_journals'] + "']").attr('selected', true);
+                            $(".sem_journals option[value='" + JsonData['achievement']['sem_journals'] + "']").attr('selected', true);
+                            $(".published_book option[value='" + JsonData['achievement']['published_book'] + "']").attr('selected', true);
+                            $('.known_languages').val(JsonData['achievement']['known_languages']);             
+                            $(".eng_read[value=" + JsonData['achievement']['eng_read'] + "]").attr('checked', true);
+                            $(".eng_speak[value=" + JsonData['achievement']['eng_speak'] + "]").attr('checked', true);
+                            $(".eng_write[value=" + JsonData['achievement']['eng_write'] + "]").attr('checked', true);
+                            $(".typing_tamil option[value='" + JsonData['achievement']['typing_tamil'] + "']").attr('selected', true); 
+                            $(".typing_english option[value='" + JsonData['achievement']['typing_english'] + "']").attr('selected', true);
+                            $(".comp_knowledge[value=" + JsonData['achievement']['comp_knowledge'] + "]").attr('checked', true); 
+                            }else{
+                            $(".set_net[value=" + JsonData['achievement'][0]['set_net'] + "]").attr('checked', true);
+                            $(".nat_journals option[value='" + JsonData['achievement'][0]['nat_journals'] + "']").attr('selected', true);
+                            $(".int_journals option[value='" + JsonData['achievement'][0]['int_journals'] + "']").attr('selected', true);
+                            $(".sem_journals option[value='" + JsonData['achievement'][0]['sem_journals'] + "']").attr('selected', true);
+                            $(".published_book option[value='" + JsonData['achievement'][0]['published_book'] + "']").attr('selected', true);
+                            $('.known_languages').val(JsonData['achievement'][0]['known_languages']);             
+                            $(".eng_read[value=" + JsonData['achievement'][0]['eng_read'] + "]").attr('checked', true);
+                            $(".eng_speak[value=" + JsonData['achievement'][0]['eng_speak'] + "]").attr('checked', true);
+                            $(".eng_write[value=" + JsonData['achievement'][0]['eng_write'] + "]").attr('checked', true);
+                            $(".typing_tamil option[value='" + JsonData['achievement'][0]['typing_tamil'] + "']").attr('selected', true); 
+                            $(".typing_english option[value='" + JsonData['achievement'][0]['typing_english'] + "']").attr('selected', true);
+                            $(".comp_knowledge[value=" + JsonData['achievement'][0]['comp_knowledge'] + "]").attr('checked', true);  
+                            }         
+                        }    
+            
+                        //Add Class Active
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        //show the next fieldset
+                        next_fs.show();
+                        //hide the current fieldset with style
+                        current_fs.animate({ opacity: 0 }, {
+                            step: function (now) {
+                                // for making fielset appear animation
+                                opacity = 1 - now;
+            
+                                current_fs.css({
+                                    'display': 'none',
+                                    'position': 'relative'
+                                });
+                                next_fs.css({ 'opacity': opacity });
+                            },
+                            duration: 600
+                        });
+                    },
+                    error: function () { alert("Error posting feed."); }
+                });
+            
+            //return false;
+        });
+
+        $("#achievementInfo").click(function (){
+            //function insert_personal() {
+        
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+                var personal_id = $('#personal_id').val();
+    
+                var achievementInfo = $('.achievementInfo').serialize();
+    
+                $.ajax({
+                    type: "GET",
+                    url: "recruitment/achievement_insert?" + achievementInfo + '&personal_id='+personal_id,
+                    //data: form.serialize(), // <--- THIS IS THE CHANGE        
+                    success: function (data) {
+
+                        console.log(data);
+
+                        // var JsonData = JSON.parse(data);                         
+            
+                        // if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
+                        //     console.log(JsonData);
+                        // } else {
+                        //     console.log(JsonData['achievement'][0]['eng_speak']);
+                        //     $(".set_net[value=" + JsonData['achievement'][0]['set_net'] + "]").attr('checked', true);
+                        //     $('.known_languages').val(JsonData['achievement'][0]['known_languages']);             
+                        //     $(".comp_knowledge[value=" + JsonData['achievement'][0]['comp_knowledge'] + "]").attr('checked', true);           
+                        // }    
+            
+                        //Add Class Active
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        //show the next fieldset
+                        next_fs.show();
+                        //hide the current fieldset with style
+                        current_fs.animate({ opacity: 0 }, {
+                            step: function (now) {
+                                // for making fielset appear animation
+                                opacity = 1 - now;
+            
+                                current_fs.css({
+                                    'display': 'none',
+                                    'position': 'relative'
+                                });
+                                next_fs.css({ 'opacity': opacity });
+                            },
+                            duration: 600
+                        });
+                    },
+                    error: function () { alert("Error posting feed."); }
+                });
+            
+            //return false;
+        });
+
+        $("#joiningInfo").click(function (){
+              //function insert_personal() {
+        
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+                var personal_id = $('#personal_id').val();
+    
+                var joiningInfo = $('.joiningInfo').serialize();
+    
+                $.ajax({
+                    type: "GET",
+                    url: "recruitment/joining_insert?" + joiningInfo + '&personal_id='+personal_id,
+                    //data: form.serialize(), // <--- THIS IS THE CHANGE        
+                    success: function (data) {
+    
+                        console.log("Success..");
+                        //var JsonData = JSON.parse(data);               
+            
+                        //Add Class Active
+                        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                        //show the next fieldset
+                        next_fs.show();
+                        //hide the current fieldset with style
+                        current_fs.animate({ opacity: 0 }, {
+                            step: function (now) {
+                                // for making fielset appear animation
+                                opacity = 1 - now;
+            
+                                current_fs.css({
+                                    'display': 'none',
+                                    'position': 'relative'
+                                });
+                                next_fs.css({ 'opacity': opacity });
+                            },
+                            duration: 600
+                        });
+                    },
+                    error: function () { alert("Error posting feed."); }
+                });
+            
             //return false;
         });
 
@@ -285,19 +558,19 @@ $(document).ready(function () {
                 $('#street_address_2').val($('#street_address_1').val());
                 $('#city_2').val($('#city_1').val());
                 $('#state_2').val($('#state_1').val());
-                $('#pin_2').val($('#pin_1').val());
-                $('#phone_no_2').attr('disabled', 'disabled');
-                $('#street_address_2').attr('disabled', 'disabled');
-                $('#city_2').attr('disabled', 'disabled');
-                $('#state_2').attr('disabled', 'disabled');
-                $('#pin_2').attr('disabled', 'disabled');
+                $('#pin_no_2').val($('#pin_no_1').val());
+                $('#phone_no_2').addClass("focus");
+                $('#street_address_2').addClass("focus");
+                $('#city_2').addClass("focus");
+                $('#state_2').addClass("focus");
+                $('#pin_no_2').addClass("focus");
                 $('.error').remove();
             } else {
-                $('#phone_no_2').removeAttr('disabled');
-                $('#street_address_2').removeAttr('disabled');
-                $('#city_2').removeAttr('disabled');
-                $('#state_2').removeAttr('disabled');
-                $('#pin_2').removeAttr('disabled');
+                $('#phone_no_2').removeClass("focus")
+                $('#street_address_2').removeClass("focus")
+                $('#city_2').removeClass("focus")
+                $('#state_2').removeClass("focus")
+                $('#pin_no_2').removeClass("focus")
             }
         } else {
             $('.error').html('Please fill the address first..??');

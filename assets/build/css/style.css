@@ -6,11 +6,6 @@
 .nav-tabs li+li{
     margin-left:10%;
 }
-.add-row{
-    position: relative;
-    top: -60px;
-    transform: translate(0%, 0%);
-}
 
 .val1::placeholder, .val2::placeholder, .val3::placeholder, .val4::placeholder, .val5::placeholder, .val6::placeholder, .val7::placeholder {
     color: #ccc;

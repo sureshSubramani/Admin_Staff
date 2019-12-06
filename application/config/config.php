@@ -5,7 +5,8 @@ define('PERSONAL', 'personal_details');
 define('COMMUNICATION', 'communication_details');
 define('EDUCATION', 'education_details');
 define('EXPERIENCE', 'experience_details');
-define('ACHIEVEMENT', ' achievement_details');
+define('ACHIEVEMENT', 'achievement_details');
+define('JOINING', 'joining_details');
 
 
 define('GOOGLE_KEY', '6LeYqMQUAAAAAN5ESVDHgxWRzZwT3UsbLlmWfVhc');

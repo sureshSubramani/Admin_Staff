@@ -45,34 +45,91 @@ class Recruitment_model extends CI_Model{
         print_r(json_encode($common_array));
     }
 
-    public function Insert_Update_communication($get){
-       
-        if($get['per_com_id'] == 0){
+    public function Insert_communication($getData,$personal_id){
+ 
+        $this->db->where('personal_id',$personal_id );
+        $this->db->delete(COMMUNICATION);
 
-            $this->db->insert(COMMUNICATION,$get);
+        $this->db->insert_batch(COMMUNICATION,$getData);
+
+        // $personal_id = $this->db->insert_id();
+        /*if($getData['per_com_id'] == 0){
+
+            $this->db->insert(COMMUNICATION,$getData);
            
             $personal_id = $this->db->insert_id();           
         }
         else{
+            for($i=0; $i<count($getData['type_of_address']); $i++){
 
-            for($i=0; $i<count($get['type_of_address']); $i++){
+                $update_array = array('personal_id'=>$getData['per_com_id'],'type_of_address'=>$getData['type_of_address'][$i],'phone_no'=>$getData['phone_no'][$i],
+                'street_address'=>$getData['street_address'][$i],'city'=>$getData['city'][$i],'state'=>$getData['state'][$i],'country'=>$getData['country'][$i],'pin_no'=>$getData['pin_no'][$i]);          
 
-                $update_array = array('personal_id'=>$get['per_com_id'],'type_of_address'=>$get['type_of_address'][$i],'phone_no'=>$get['phone_no'][$i],
-                'street_address'=>$get['street_address'][$i],'city'=>$get['city'][$i],'state'=>$get['state'][$i],'country'=>$get['country'][$i],'pin_no'=>$get['pin_no'][$i]);          
-
-                $this->db->where('personal_id', $get['per_com_id']);
+                $this->db->where('personal_id', $getData['per_com_id']);
                 $this->db->update(COMMUNICATION,$update_array);
             }                  
             
-            $personal_id =  $get['per_com_id']; 
-        }
+            $personal_id =  $getData['per_com_id']; 
+        }*/
 
         $this->db->select('*');
-        $this->db->where('personal_id', $personal_id);
-        
+        $this->db->where('personal_id', $personal_id);        
         $getExist = $this->db->get(EDUCATION)->result();
  
         $common_array = array('personal_id'=>$personal_id, 'education'=>$getExist);
+
+        print_r(json_encode($common_array));
+    }
+
+    public function Insert_education($getData,$personal_id){
+ 
+        $this->db->where('personal_id',$personal_id );
+        $this->db->delete(EDUCATION);
+
+
+        $this->db->order_by('ASC');
+        $this->db->insert_batch(EDUCATION,$getData);
+
+        $this->db->select('*');
+        $this->db->where('personal_id', $personal_id);        
+        $getExist = $this->db->get(EXPERIENCE)->result();
+ 
+        $common_array = array('personal_id'=>$personal_id, 'experience'=>$getExist);
+
+        print_r(json_encode($common_array));
+    }
+
+    public function Insert_experience($getData,$personal_id){
+ 
+        $this->db->where('personal_id',$personal_id );
+        $this->db->delete(EXPERIENCE);
+
+
+        $this->db->order_by('ASC');
+        $this->db->insert_batch(EXPERIENCE,$getData);
+
+        $this->db->select('*');
+        $this->db->where('personal_id', $personal_id);        
+        $getExist = $this->db->get(ACHIEVEMENT)->result();
+ 
+        $common_array = array('personal_id'=>$personal_id, 'achievement'=>$getExist);
+
+        print_r(json_encode($common_array));
+    }
+
+    public function Insert_achievement($getData,$personal_id){
+ 
+        $this->db->where('personal_id',$personal_id );
+        $this->db->delete(EXPERIENCE);
+
+        $this->db->order_by('ASC');
+        $this->db->insert_batch(ACHIEVEMENT,$getData);
+        
+        $this->db->select('*');
+        $this->db->where('personal_id', $personal_id);        
+        $getExist = $this->db->get(JOINING)->result();
+ 
+        $common_array = array('personal_id'=>$personal_id, 'achievement'=>$getExist);
 
         print_r(json_encode($common_array));
     }
@@ -102,26 +159,6 @@ class Recruitment_model extends CI_Model{
          }else{
           return 0;
          }
-    }
-    
-    // insert multi row
-    public function insert_csv($get_all){
-        $this->db->insert_batch('members', $get_all);
-    }
-
-    // display regars on row
-    public function get_members(){
-        //$this->db->where('status', 1);        
-        $data = $this->db->get('members')->result();
-        return $data;
-    }
-
-    public function get_members_csv(){
-        $response = array();    
-        //$this->db->where('status', 1);        
-        $data = $this->db->get('members');
-        $response = $data->result_array();
-        return $response;
     }
 	
 }

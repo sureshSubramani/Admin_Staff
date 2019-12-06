@@ -296,6 +296,12 @@ select {
   color: rgb(4, 104, 46);
 }
 
+.add-row {
+  position: relative;
+  top: -60px;
+  transform: translate(-5.5%, 0%);
+}
+
 input[type=checkbox]#copy_address {
   width: 22px;
   position: relative;
@@ -315,6 +321,13 @@ input[type=radio], input[type=checkbox]{
   top: 2px;
 }
 
+
+.focus{
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}
 /* .form-card:before {
   content: ' \25BC';
   display: inline-block;
