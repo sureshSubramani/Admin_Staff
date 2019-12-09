@@ -18,6 +18,14 @@ class Recruitment_model extends CI_Model{
          }
     }
 
+    public function check_Exist($email){
+        $this->db->where("status",1);        
+        $this->db->where("email_id",$email);
+        //$this->db->where("phone_no",$phone);
+        $q = $this->db->get(PERSONAL);
+        return $q->num_rows();
+    }
+
     /*Insert row*/
     public function Insert_Update_personal($insert_up_personal){
        
@@ -120,7 +128,7 @@ class Recruitment_model extends CI_Model{
     public function Insert_achievement($getData,$personal_id){
  
         $this->db->where('personal_id',$personal_id );
-        $this->db->delete(EXPERIENCE);
+        $this->db->delete(ACHIEVEMENT);
 
         $this->db->order_by('ASC');
         $this->db->insert_batch(ACHIEVEMENT,$getData);
@@ -129,9 +137,26 @@ class Recruitment_model extends CI_Model{
         $this->db->where('personal_id', $personal_id);        
         $getExist = $this->db->get(JOINING)->result();
  
-        $common_array = array('personal_id'=>$personal_id, 'achievement'=>$getExist);
+        $common_array = array('personal_id'=>$personal_id, 'joining'=>$getExist);
 
         print_r(json_encode($common_array));
+    }
+
+    public function Insert_joining($getData,$personal_id){
+ 
+        $this->db->where('personal_id',$personal_id );
+        $this->db->delete(JOINING);
+
+        $this->db->order_by('ASC');
+        $this->db->insert_batch(JOINING,$getData);
+        
+        // $this->db->select('*');
+        // $this->db->where('personal_id', $personal_id);        
+        // $getExist = $this->db->get(ACHIEVEMENT)->result();
+ 
+        // $common_array = array('personal_id'=>$personal_id, ''=>$getExist);
+
+        // print_r(json_encode($common_array));
     }
 
     public function insert_personal(){ 
@@ -160,6 +185,27 @@ class Recruitment_model extends CI_Model{
           return 0;
          }
     }
+
+    public function getStaff_List(){
+
+        //$this->db->where("status",1);
+        $this->db->from(PERSONAL.' as p');
+        $this->db->join(EXPERIENCE.' as exp', 'p.personal_id = exp.personal_id', 'left');
+              
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0){
+          return $query->result();
+          }
+        return false;        
+    }
+
+    public function select_staff($data){
+        for($i=0; $i<count($data); $i++){
+        $this->db->where('personal_id',$data['personal_id'][$i] );
+        $this->db->insert(JOINING,$getData['staff_status'][$i]);
+        }
+	}
 	
 }
 

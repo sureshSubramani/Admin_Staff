@@ -17,6 +17,11 @@
     <script src="assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- FastClick -->
     <script src="assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- dataTable -->
+    <script src="assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <!-- NProgress -->
     <script src="assets/vendors/nprogress/nprogress.js"></script>
     <!-- Chart.js -->

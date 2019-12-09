@@ -60,8 +60,10 @@ $(document).ready(function () {
                     data: { "email_id": email, "phone_no": phone },
                     success: function (res) {                                  
 
+                        console.log(res);
+
                         if (res == 0 || res == '0') {
-                            console.log(res);
+                            $('#personal_id').val(res);
 
                         } else {
 
@@ -208,7 +210,7 @@ $(document).ready(function () {
                     var JsonData = JSON.parse(data);
         
                     if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
-                        console.log(data);
+                        $('#personal_id').val(data);
                     } else {
                          //console.log(JsonData['education'].length);                        
 
@@ -221,6 +223,7 @@ $(document).ready(function () {
                                 $('#college').val(JsonData['education'][i]['college']);
                                 $('#mos').val(JsonData['education'][i]['mos']);
                                 $('#aff_university').val(JsonData['education'][i]['aff_university']);
+                                $('#yoj').val(JsonData['education'][i]['yoj']);
                                 $('#yop').val(JsonData['education'][i]['yop']);
                                 $('#percentage').val(JsonData['education'][i]['percentage']);
                                 }else{
@@ -228,13 +231,14 @@ $(document).ready(function () {
                                     var row = $("<tr class='removeClassEdu_"+SNo+"'>");
                                     $("#edu_fields").append(row); //this will append tr element to table.
                                     row.append($('<td>' + SNo + '</td>'));
-                                    row.append($("<td><input type='text' name='degree[]' class='form-control val2' id='degree' value='"+ JsonData['education'][i]['degree'] +"' placeholder='Enter Degree'></td>"));
-                                    row.append($("<td><input type='text' name='subject[]' class='form-control val2' id='subject' value='"+ JsonData['education'][i]['specialization'] +"' placeholder='Enter Specialization'></td>"));
-                                    row.append($("<td><input type='text' name='college[]' class='form-control val2' id='college' value='"+ JsonData['education'][i]['college'] +"' placeholder='Enter Subject'></td>"));
-                                    row.append($("<td><input type='text' name='mos[]' class='form-control val2' id='mos' value='"+ JsonData['education'][i]['mos'] +"' placeholder='Enter Mode of Study'></td>"));
-                                    row.append($("<td><input type='text' name='aff_university[]' class='form-control val2' id='aff_university' value='"+ JsonData['education'][i]['aff_university'] +"' placeholder='Enter University'></td>"));
-                                    row.append($("<td><input type='text' name='yop[]' class='form-control val2' id='yop' value='"+ JsonData['education'][i]['yop'] +"' placeholder='Enter Year of Passing'></td>"));
-                                    row.append($("<td><input type='text' name='percentage[]' class='form-control val2' id='percentage' value='"+ JsonData['education'][i]['percentage'] +"' placeholder='Enter Percentage'></td>"));
+                                    row.append($("<td><input type='text' name='degree[]' class='form-control' id='degree' value='"+ JsonData['education'][i]['degree'] +"' placeholder='Enter Degree'></td>"));
+                                    row.append($("<td><input type='text' name='subject[]' class='form-control' id='subject' value='"+ JsonData['education'][i]['specialization'] +"' placeholder='Enter Specialization'></td>"));
+                                    row.append($("<td><input type='text' name='college[]' class='form-control' id='college' value='"+ JsonData['education'][i]['college'] +"' placeholder='Enter Subject'></td>"));
+                                    row.append($("<td><input type='text' name='mos[]' class='form-control' id='mos' value='"+ JsonData['education'][i]['mos'] +"' placeholder='Enter Mode of Study'></td>"));
+                                    row.append($("<td><input type='text' name='aff_university[]' class='form-control' id='aff_university' value='"+ JsonData['education'][i]['aff_university'] +"' placeholder='Enter University'></td>"));
+                                    row.append($("<td><input type='text' name='yoj[]' class='form-control' id='yoj' value='"+ JsonData['education'][i]['yoj'] +"' placeholder='YYYY-MM-DD'></td>"));
+                                    row.append($("<td><input type='text' name='yop[]' class='form-control' id='yop' value='"+ JsonData['education'][i]['yop'] +"' placeholder='YYYY-MM-DD'></td>"));
+                                    row.append($("<td><input type='text' name='percentage[]' class='form-control' id='percentage' value='"+ JsonData['education'][i]['percentage'] +"' placeholder='Enter Percentage'></td>"));
                                     row.append($("<td><button class='btn btn-sm btn-danger' type='button' onclick='remove_edu_fields("+SNo+");'> <span class='fa fa-trash' aria-hidden='true'></span> </button></td>"));
                                     row.append($('</tr>'));
                                 }
@@ -288,7 +292,7 @@ $(document).ready(function () {
                         var JsonData = JSON.parse(data);
             
                         if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
-                            console.log(data);
+                            $('#personal_id').val(data);
                         } else {
                             //console.log(JsonData);                   
                             if(!($.isEmptyObject(JsonData['experience']))){                                                    
@@ -364,37 +368,27 @@ $(document).ready(function () {
                         var JsonData = JSON.parse(data);                         
             
                         if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
-                            console.log(JsonData);
-                        } else {
-                            //console.log(JsonData['achievement'][0]['eng_speak']);
+                            $('#personal_id').val(data);
+                        } else {                          
 
-                            if(JsonData['achievement'][0]['set_net'] == undefined){
-                            $(".set_net[value=" + JsonData['achievement']['set_net'] + "]").attr('checked', true);
-                            $(".nat_journals option[value='" + JsonData['achievement']['nat_journals'] + "']").attr('selected', true);
-                            $(".int_journals option[value='" + JsonData['achievement']['int_journals'] + "']").attr('selected', true);
-                            $(".sem_journals option[value='" + JsonData['achievement']['sem_journals'] + "']").attr('selected', true);
-                            $(".published_book option[value='" + JsonData['achievement']['published_book'] + "']").attr('selected', true);
-                            $('.known_languages').val(JsonData['achievement']['known_languages']);             
-                            $(".eng_read[value=" + JsonData['achievement']['eng_read'] + "]").attr('checked', true);
-                            $(".eng_speak[value=" + JsonData['achievement']['eng_speak'] + "]").attr('checked', true);
-                            $(".eng_write[value=" + JsonData['achievement']['eng_write'] + "]").attr('checked', true);
-                            $(".typing_tamil option[value='" + JsonData['achievement']['typing_tamil'] + "']").attr('selected', true); 
-                            $(".typing_english option[value='" + JsonData['achievement']['typing_english'] + "']").attr('selected', true);
-                            $(".comp_knowledge[value=" + JsonData['achievement']['comp_knowledge'] + "]").attr('checked', true); 
-                            }else{
-                            $(".set_net[value=" + JsonData['achievement'][0]['set_net'] + "]").attr('checked', true);
-                            $(".nat_journals option[value='" + JsonData['achievement'][0]['nat_journals'] + "']").attr('selected', true);
-                            $(".int_journals option[value='" + JsonData['achievement'][0]['int_journals'] + "']").attr('selected', true);
-                            $(".sem_journals option[value='" + JsonData['achievement'][0]['sem_journals'] + "']").attr('selected', true);
-                            $(".published_book option[value='" + JsonData['achievement'][0]['published_book'] + "']").attr('selected', true);
-                            $('.known_languages').val(JsonData['achievement'][0]['known_languages']);             
-                            $(".eng_read[value=" + JsonData['achievement'][0]['eng_read'] + "]").attr('checked', true);
-                            $(".eng_speak[value=" + JsonData['achievement'][0]['eng_speak'] + "]").attr('checked', true);
-                            $(".eng_write[value=" + JsonData['achievement'][0]['eng_write'] + "]").attr('checked', true);
-                            $(".typing_tamil option[value='" + JsonData['achievement'][0]['typing_tamil'] + "']").attr('selected', true); 
-                            $(".typing_english option[value='" + JsonData['achievement'][0]['typing_english'] + "']").attr('selected', true);
-                            $(".comp_knowledge[value=" + JsonData['achievement'][0]['comp_knowledge'] + "]").attr('checked', true);  
-                            }         
+                            for(i=0; i<JsonData['achievement'].length; i++){
+
+                                //console.log(JsonData['achievement'][i]['eng_speak']);
+                            
+                                $(".set_net[value=" + JsonData['achievement'][i]['set_net'] + "]").attr('checked', true);
+                                $(".nat_journals option[value='" + JsonData['achievement'][i]['nat_journals'] + "']").attr('selected', true);
+                                $(".int_journals option[value='" + JsonData['achievement'][i]['int_journals'] + "']").attr('selected', true);
+                                $(".sem_journals option[value='" + JsonData['achievement'][i]['sem_journals'] + "']").attr('selected', true);
+                                $(".published_book option[value='" + JsonData['achievement'][i]['published_book'] + "']").attr('selected', true);
+                                $('.known_languages').val(JsonData['achievement'][i]['known_languages']);             
+                                $(".eng_read[value=" + JsonData['achievement'][i]['eng_read'] + "]").attr('checked', true);
+                                $(".eng_speak[value=" + JsonData['achievement'][i]['eng_speak'] + "]").attr('checked', true);
+                                $(".eng_write[value=" + JsonData['achievement'][i]['eng_write'] + "]").attr('checked', true);
+                                $(".typing_tamil option[value='" + JsonData['achievement'][i]['typing_tamil'] + "']").attr('selected', true); 
+                                $(".typing_english option[value='" + JsonData['achievement'][i]['typing_english'] + "']").attr('selected', true);
+                                $(".comp_knowledge[value=" + JsonData['achievement'][i]['comp_knowledge'] + "]").attr('checked', true); 
+
+                            }
                         }    
             
                         //Add Class Active
@@ -435,20 +429,19 @@ $(document).ready(function () {
                     type: "GET",
                     url: "recruitment/achievement_insert?" + achievementInfo + '&personal_id='+personal_id,
                     //data: form.serialize(), // <--- THIS IS THE CHANGE        
-                    success: function (data) {
+                    success: function (data) {                      
 
-                        console.log(data);
-
-                        // var JsonData = JSON.parse(data);                         
+                        var JsonData = JSON.parse(data);                         
             
-                        // if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
-                        //     console.log(JsonData);
-                        // } else {
-                        //     console.log(JsonData['achievement'][0]['eng_speak']);
-                        //     $(".set_net[value=" + JsonData['achievement'][0]['set_net'] + "]").attr('checked', true);
-                        //     $('.known_languages').val(JsonData['achievement'][0]['known_languages']);             
-                        //     $(".comp_knowledge[value=" + JsonData['achievement'][0]['comp_knowledge'] + "]").attr('checked', true);           
-                        // }    
+                        if (JsonData['personal_id'] == 0 || JsonData['personal_id'] == '0') {
+                            $('#personal_id').val(data);
+                        } else {
+                            for(i=0; i<JsonData['joining'].length; i++){                          
+                                $('#date_of_joining').val(JsonData['joining'][i]['date_of_joining']);
+                                $('#current_salary').val(JsonData['joining'][i]['current_salary']);             
+                                $('#expected_salary').val(JsonData['joining'][i]['expected_salary']); 
+                            }       
+                        }    
             
                         //Add Class Active
                         $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -638,8 +631,6 @@ $(document).ready(function () {
 //         next_fs.show(); 
 //         current_fs.hide();
 //     });
-
-
 // });
 
 
@@ -649,7 +640,6 @@ $(document).ready(function () {
 //     $.validator.addMethod("usernameRegex", function(value, element) {
 //         return this.optional(element) || /^[a-zA-Z0-9]*$/i.test(value);
 //     }, "Username must contain only letters, numbers");
-
 //     $(".next").click(function(){
 //         var form = $("#checkUser");
 //         form.validate({

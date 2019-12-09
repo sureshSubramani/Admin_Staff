@@ -5,7 +5,8 @@ class Recruitment extends CI_Controller {
     
     function __construct(){
         parent::__construct();
-        $this->load->model('recruitment_model','rm');
+		$this->load->model('recruitment_model','rm');
+		$this->load->model('admin_model');
     }
 
 	public function index(){
@@ -67,7 +68,7 @@ class Recruitment extends CI_Controller {
 
 	public function education_insert(){
 		$insert_array = array();
-			  
+		//print_r($_GET); die();  
 		if($_GET){
 		
 			for($i=0; $i<count($_GET['degree']); $i++){
@@ -95,13 +96,12 @@ class Recruitment extends CI_Controller {
 	public function achievement_insert(){
 		$insert_array = array();
 
-		//print_r($_GET); die();
 		if($_GET){
 			
-			//for($i=0; $i<count($_GET['set_net']); $i++){
-				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'set_net'=>$_GET['set_net'],'nat_journals'=>$_GET['nat_journals'],'int_journals'=>$_GET['int_journals'],'sem_journals'=>$_GET['sem_journals'], 'published_book'=>$_GET['published_book'],'known_languages'=>$_GET['known_languages']
-				,'eng_read'=>$_GET['eng_read'],'eng_speak'=>$_GET['eng_speak'],'eng_write'=>$_GET['eng_write'],'typing_tamil'=>$_GET['typing_tamil'],'typing_english'=>$_GET['typing_english'],'comp_knowledge'=>$_GET['comp_knowledge']);					
-			//}		
+			for($i=0; $i<count($_GET['personal_id']); $i++){
+				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'set_net'=>$_GET['set_net'][$i],'nat_journals'=>$_GET['nat_journals'][$i],'int_journals'=>$_GET['int_journals'][$i],'sem_journals'=>$_GET['sem_journals'][$i], 'published_book'=>$_GET['published_book'][$i],'known_languages'=>$_GET['known_languages'][$i]
+				,'eng_read'=>$_GET['eng_read'][$i],'eng_speak'=>$_GET['eng_speak'][$i],'eng_write'=>$_GET['eng_write'][$i],'typing_tamil'=>$_GET['typing_tamil'][$i],'typing_english'=>$_GET['typing_english'][$i],'comp_knowledge'=>$_GET['comp_knowledge'][$i]);					
+			}		
 			
 			//print_r($insert_array); die();
 		  $this->rm->Insert_achievement($insert_array,$_GET['personal_id']); 
@@ -110,24 +110,26 @@ class Recruitment extends CI_Controller {
 
 	public function joining_insert(){
 		$insert_array = array();
-		print_r($_GET); die();
+
 		if($_GET){
 			
-			for($i=0; $i<count($_GET['exp_college']); $i++){
-				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'exp_college'=>$_GET['exp_college'][$i],'university'=>$_GET['university'][$i],'designation'=>$_GET['designation'][$i],'doj'=>$_GET['doj'][$i], 'dol'=>$_GET['dol'][$i],'doe'=>$_GET['doe'][$i]);					
-			}			
-		  $this->rm->Insert_experience($insert_array,$_GET['personal_id']); 
+			for($i=0; $i<count($_GET['date_of_joining']); $i++){
+				$insert_array[] = array('personal_id'=>$_GET['personal_id'],'date_of_joining'=>$_GET['date_of_joining'][$i],'current_salary'=>$_GET['current_salary'][$i],'expected_salary'=>$_GET['expected_salary'][$i]);					
+			}
+
+		  $this->rm->Insert_joining($insert_array,$_GET['personal_id']); 
 		}
 	}
 
-	public function check_phone_exist1(){ //receives ajax requests
+	public function check_exist(){ //receives ajax requests
 
-        $isPhone = $this->input->post('phone');
-		$result = $this->rm->check_PhoneExist($isPhone); //sending ajax data to model
+		$isEmail = $this->input->post('email_id');
+		//$isphone = $this->input->post('phone_no');
+		$result = $this->rm->check_Exist($isEmail); //sending ajax data to model
 		if($result)
-		  echo "false";
+		  echo "1";
 		else
-		  echo "true";
+		  echo "0";
 	}
 
     public function checkUser(){
@@ -153,8 +155,7 @@ class Recruitment extends CI_Controller {
 				 //print_r($response); die();
 				 //$this->session->set_flashdata('added','You are a robot, Please try again?');
 				 //$this->load->view('welcome_staff');
-				//}
-		
+				//}		
 		}
 	}
 

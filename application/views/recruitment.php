@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +11,7 @@
     <!-- <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='assets/build/css/recuritment.css' rel='stylesheet'>
+    <link href='assets/build/css/float-label.css' rel='stylesheet'>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
@@ -20,7 +20,6 @@
 </head>
 
 <body>
-
     <!-- MultiStep Form -->
     <div class="container-fluid" id="grad1">
         <div class="row justify-content-center mt-0">
@@ -56,12 +55,18 @@
                                                         <h2 class="fs-title">Check User</h2>
                                                         <div class="row">
                                                             <div class="col-12">
+                                                              <label class="has-float-label">
                                                                 <span id='email_verify'></span>
                                                                 <input type="email" id='email_id' name="email_id" class='form-control col-md-4' value='sureshsubramani1986@gmail.com' placeholder="Enter your e-mail" required />
+                                                                <span for="email">Email</span>
+                                                              </label>
+                                                              <label class="has-float-label">
                                                                 <span id='mobile'></span>
+                                                                <span id='mobileValid'></span>
                                                                 <span id='phone_verify'></span>
                                                                 <input type="text" id='phone' name="phone_no" class='form-control col-md-4' value='8884074278' maxlength='10' placeholder="Enter your mobile no" required/>
-                                                                <!-- <input type="text" style='display:none' id='base_url' name="base_url" value='<?php echo base_url();?>'/>                                                      -->
+                                                                <span for="mobile">Mobile</span>
+                                                              </label>            
                                                             </div>
                                                             <span class='col-md-4 error text-right'><span class='error'></span></span>
                                                         </div>
@@ -266,6 +271,7 @@
                                                                     <th>College/University/Board</th>
                                                                     <th>Mode of Study (Regular/Correspondence)</th>
                                                                     <th>Affiliated University</th>
+                                                                    <th>Year of Joining</th>
                                                                     <th>Year of Passing</th>
                                                                     <th> % </th>
                                                                     <thead>
@@ -289,7 +295,10 @@
                                                                                         <input type="text" name="aff_university[]" id="aff_university" class="form-control" placeholder="Affiliated University" />
                                                                                     </td>
                                                                                     <td>
-                                                                                        <input type="text" name="yop[]" id="yop" class="form-control" placeholder="YYYY" />
+                                                                                        <input type="text" name="yoj[]" id="yoj" class="form-control" placeholder="YYY-MM-DD" />
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="text" name="yop[]" id="yop" class="form-control" placeholder="YYY-MM-DD" />
                                                                                     </td>
                                                                                     <td>
                                                                                         <input type="text" name="percentage[]" id="percentage" class="form-control" placeholder=" % " style="width:50px;" />
@@ -369,14 +378,14 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class='col-2'>Whether SET/NET passed?</label>
-                                                                <input type="radio" class='col-sm-1 col-md-1 set_net' id='set_net' name="set_net" value='Yes' required/> Yes
-                                                                <input type="radio" class='col-sm-1 col-md-1 set_net' id='set_net' name="set_net" value='No' required/> No                                                                
+                                                                <input type="radio" class='col-sm-1 col-md-1 set_net' id='set_net' name="set_net[]" value='Yes' required/> Yes
+                                                                <input type="radio" class='col-sm-1 col-md-1 set_net' id='set_net' name="set_net[]" value='No' required/> No                                                                
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-3">No. of Articles published in National Journals :</label>
-                                                                <select class="list-dt nat_journals" id='nat_journals' name='nat_journals'>
+                                                                <select class="list-dt nat_journals" id='nat_journals' name='nat_journals[]'>
                                                                     <option>----- Select -----</option>
                                                                     <option value="0">0</option>
                                                                     <option value="1">1</option>
@@ -395,7 +404,7 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-3">No. of Articles published in International Journals :</label>
-                                                                <select class="list-dt int_journals" id='int_journals' name='int_journals'>
+                                                                <select class="list-dt int_journals" id='int_journals' name='int_journals[]'>
                                                                     <option>----- Select -----</option>
                                                                     <option value="0">0</option>
                                                                     <option value="1">1</option>
@@ -414,7 +423,7 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-3">No. of Confrences / Seminner Presentation :</label>
-                                                                <select class="list-dt sem_journals" id='sem_journals' name='sem_journals'>
+                                                                <select class="list-dt sem_journals" id='sem_journals' name='sem_journals[]'>
                                                                     <option>----- Select -----</option>
                                                                     <option value="0">0</option>
                                                                     <option value="1">1</option>
@@ -433,7 +442,7 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-3">No. of Books / Chapter - Published :</label>
-                                                                <select class="list-dt published_book" id='published_book' name='published_book'>
+                                                                <select class="list-dt published_book" id='published_book' name='published_book[]'>
                                                                     <option>----- Select -----</option>
                                                                     <option value="0">0</option>
                                                                     <option value="1">1</option>
@@ -452,21 +461,21 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-2">Known Languages - specify :</label>
-                                                                <input type="text" class="col-2 known_lan" id="known_languages" name='known_languages' placeholder="Eg:- Tamil, English">
+                                                                <input type="text" class="col-2 known_lan" id="known_languages" name='known_languages[]' placeholder="Eg:- Tamil, English">
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-2">Proficiency in English :</label>
-                                                                <input type="checkbox" value="Read" id="eng_read" name="eng_read" class='col-1 eng_read'> Read
-                                                                <input type="checkbox" value="Speak" id="eng_speak" name="eng_speak" class='col-1 eng_speak'> Speak
-                                                                <input type="checkbox" value="Write" id="eng_write" name="eng_write" class='col-1 eng_write'> Write
+                                                                <input type="checkbox" value="Read" id="eng_read" name="eng_read[]" class='col-1 eng_read'> Read
+                                                                <input type="checkbox" value="Speak" id="eng_speak" name="eng_speak[]" class='col-1 eng_speak'> Speak
+                                                                <input type="checkbox" value="Write" id="eng_write" name="eng_write[]" class='col-1 eng_write'> Write
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-3">Typing Lower / Higher in Tamil :</label>
-                                                                <select class="list-dt typing_tamil" id='typing_tamil' name='typing_tamil'>
+                                                                <select class="list-dt typing_tamil" id='typing_tamil' name='typing_tamil[]'>
                                                                     <option>----- Select -----</option>
                                                                     <option value="Lower">Lower</option>
                                                                     <option value="Higher">Higher</option>
@@ -476,7 +485,7 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-3">Typing Lower / Higher in English :</label>
-                                                                <select class="list-dt typing_english" id='typing_english' name='typing_english'>
+                                                                <select class="list-dt typing_english" id='typing_english' name='typing_english[]'>
                                                                     <option>----- Select -----</option>
                                                                     <option value="Lower">Lower</option>
                                                                     <option value="Higher">Higher</option>
@@ -486,8 +495,8 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <label class="col-2">Computer Knowledge :</label>
-                                                                <input type="radio" class='col-sm-1 col-md-1 comp_knowledge' id='comp_knowledge' name="comp_knowledge" value='Yes' required/> Yes
-                                                                <input type="radio" class='col-sm-1 col-md-1 comp_knowledge' id='comp_knowledge' name="comp_knowledge" value='No' required/> No                                                                                                                                 
+                                                                <input type="radio" class='col-sm-1 col-md-1 comp_knowledge' id='comp_knowledge' name="comp_knowledge[]" value='Yes' required/> Yes
+                                                                <input type="radio" class='col-sm-1 col-md-1 comp_knowledge' id='comp_knowledge' name="comp_knowledge[]" value='No' required/> No                                                                                                                                 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -504,19 +513,19 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <label class="col-2">Date of Joining :</label>
-                                                        <input type="text" class="col-2" id="date_of_joining" name='date_of_joining' placeholder="eg:- 15 Days">
+                                                        <input type="text" class="col-2" id="date_of_joining" name='date_of_joining[]' placeholder="eg:- 15 Days">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <label class="col-2">Current Salary in Month :</label>
-                                                        <input type="text" class="col-2" id="current_salary" name='current_salary' placeholder="Enter current salary">
+                                                        <input type="text" class="col-2" id="current_salary" name='current_salary[]' placeholder="Enter current salary">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <label class="col-2">Expected Salary in Month :</label>
-                                                        <input type="text" class="col-2" id="expected_salary" name='expected_salary' placeholder="Enter expected salary">
+                                                        <input type="text" class="col-2" id="expected_salary" name='expected_salary[]' placeholder="Enter expected salary">
                                                     </div>
                                                 </div>
                                             </div>
@@ -550,24 +559,22 @@
     </div>
 
     <script>
-        $("#personal").click(function() {
-            var email_id = $("#first_name").val();
-            var phone = $("#phone").val();
-            if ($("#email_id").val().length >= 4 && $("#phone").val().length == 10) {
+        $("#email_id").keyup(function() {
+            var email_id = $("#email_id").val();
+            //var phone = $("#phone").val();
+            if ($("#email_id").val().length >= 4 && $("#phone").val().length == 10 ) {
                 $.ajax({
                     type: "POST",
-                    url: "recruitment/check_user_exist",
+                    url: "recruitment/check_exist",
                     data: {
-                        "email_id": email_id,
-                        "phone": phone
+                        "email_id": email_id
                     },
                     success: function(res) {
-                        alert(url);
-                        console.log(res);
-                        if (res == "true") {
+                        // console.log(res);
+                        if (res == "0") {
                             $("#email_verify").text("");
-                        } else {
-                            $("#email_verify").text("Already user taken, Please enter phone number then click next to do update..");
+                        } else {                            
+                            $("#email_verify").text("Already user taken, Please enter phone number then click next.");
                         }
                     }
                 });
@@ -576,42 +583,22 @@
             }
         });
 
-        // $("#phone").keyup(function() {
-        //     alert($("#phone").val());
-        //      //var email_id = $("#email_id").val();
-        //         if ($("#phone").val().length == 10) {
-        //             $.ajax({
-        //                 type: "POST",
-        //                 url: "<?php echo base_url();?>recruitment/check_phone_exist",
-        //                 data: "mobile=" + $("#phone").val(),
-        //                 success: function(res) {
-        //                    // alert(res); console.log(res);
-        //                     if (res == "true") {
-        //                         $("#phone_verify").text("");
-        //                     } else {
-        //                         $("#phone_verify").text("Already user taken, Please enter phone number then click next..");
-        //                         $("#mobile").text("");
-        //                     }
-        //                 }
-        //             });
-        //         } else {
-        //             $("#phone_verify").text(""); /*css({ "background-image" "none" })*/
-        //         }
-        // });
-
         $("#phone").keyup(function() {
             if ($("#phone").val().length >= 1) {
                 if (validatePhone('txtphone')) {
                     if ($("#phone").val().length < 10 || $("#phone").val().length > 10) {
                         $("#mobile").text("Enter a 10 digit number");
                     } else {
-                        $("#mobile").text("Valid");
+                        $("#mobileValid").text("Valid");
+                        $("#mobile").text("");
                     }
                 } else {
                     $("#mobile").text("Enter the digits");
+                    $("#mobileValid").text("");
                 }
             } else {
                 $("#mobile").text("");
+                $("#mobileValid").text("");
             }
 
             function validatePhone(txtPhone) {
@@ -634,12 +621,13 @@
             var rdiv = 'removeClassEdu_' + eduId;
             tableRow.innerHTML = '<td>' + eduId + '</td>' +
                 '<td><input type="text" name="degree[]" class="form-control" id="degree" placeholder="Enter College"></td>' +
-                '<td><input type="text" name="subject[]" id="subject" class="form-control" placeholder="Enter University"/></td>' +
-                '<td><input type="text" name="college[]" id="designation" class="form-control" placeholder="Enter Designation" /></td>' +
+                '<td><input type="text" name="subject[]" id="subject" class="form-control" placeholder="Enter Subject"/></td>' +
+                '<td><input type="text" name="college[]" id="designation" class="form-control" placeholder="Enetr College/University" /></td>' +
                 '<td><input type="text" name="mos[]" id="mos" class="form-control" placeholder="Mode of Stydy"/></td>' +
-                '<td><input type="text" name="yop[]" id="yop" class="form-control" placeholder="Year of Passing"/></td>' +
-                '<td><input type="text" name="yoj[]" id="yoj" class="form-control" placeholder="YYYY"/></td>' +
-                '<td><input type="text" name="perc[]" id="perc" class="form-control" placeholder="%" style="width:50px;"/></td>' +
+                '<td><input type="text" name="aff_university[]" id="aff_university" class="form-control" placeholder="Mode of Stydy"/></td>' +
+                '<td><input type="text" name="yoj[]" id="yoj" class="form-control" placeholder="YYYY-MM-DD"/></td>' +
+                '<td><input type="text" name="yop[]" id="yop" class="form-control" placeholder="YYYY-MM-DD"/></td>' +                
+                '<td><input type="text" name="percentage[]" id="percentage" class="form-control" placeholder="%" style="width:50px;"/></td>' +
                 '<td><button class="btn btn-sm btn-danger" type="button" onclick="remove_edu_fields(' + eduId + ');"> <span class="fa fa-trash" aria-hidden="true"></span> </button></td>';
 
             objTo.appendChild(tableRow)
@@ -690,7 +678,7 @@
 });
 
 $("#education_table").on("keyup", ".txtMult input", multInputs); */
-    </script>
+</script>
 
 </body>
 

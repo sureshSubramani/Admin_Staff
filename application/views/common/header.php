@@ -16,13 +16,17 @@
     <link href="assets/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-	
+    <!--- float Label --->
+    <link href='assets/build/css/float-label.css' rel='stylesheet'>
     <!-- bootstrap-progressbar -->
     <link href="assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- JQVMap -->
     <link href="assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- DataTable -->
+    <link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link href="assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="assets/build/css/custom.min.css" rel="stylesheet">
     <link href="assets/build/css/style.css" rel="stylesheet">
@@ -59,11 +63,9 @@
                   <li class="<?php if($this->uri->uri_string() == 'dashboard') { echo 'active'; } ?>"><a href="<?php echo base_url()?>dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
                   <li><a><i class="fa fa-users"></i> Recuritment <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="#">Staff List</a></li>
-                      <li><a href="register_staff">Register Staff</a></li>
-                      <li><a href="morisjs.html">Moris JS</a></li>
-                      <li><a href="echarts.html">ECharts</a></li>
-                      <li><a href="other_charts.html">Other Charts</a></li>
+                      <li><a href="<?php echo base_url()?>staff_list">Staff List</a></li>
+                      <li><a href="register_staff">Selected Staff</a></li>
+                      <li><a href="morisjs.html">Rejected Staff</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Menu 1 <span class="fa fa-chevron-down"></span></a>

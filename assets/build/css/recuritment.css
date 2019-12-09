@@ -18,6 +18,7 @@ body {
   background-image: linear-gradient(120deg, rgb(66, 62, 66), rgb(6, 60, 85));
   /* background: #414948; */
 }
+
 #msform {
   text-align: center;
   position: relative;
@@ -250,8 +251,8 @@ select.list-dt:focus {
   margin: 8px 2px;
 }
 
-label{
-  color:#222;
+label {
+  color: #222;
 }
 
 .radio:hover {
@@ -288,7 +289,7 @@ select {
   color: rgb(170, 4, 4);
 }
 
-.error span{
+.error span {
   color: rgb(170, 4, 4);
 }
 
@@ -310,24 +311,40 @@ input[type=checkbox]#copy_address {
   left: 15px;
 }
 
-#email_verify{
-  color: rgb(4, 104, 46);
+#email_verify {
+  transform: translate(10%, -5%);
+  color: rgb(4, 138, 64);
+  font-size: 14px;
   font-weight: 600;
 }
 
-input[type=radio], input[type=checkbox]{
+input[type=radio], input[type=checkbox] {
   right: -50px;
   position: relative;
   top: 2px;
 }
 
+#mobile {
+  transform: translate(0%, 0%);
+  color: red;
+  top: 42px;
+}
 
-.focus{
+#mobileValid {
+  transform: translate(0%, 0%);
+  color: rgb(4, 138, 64);
+  top: 42px;
+}
+
+.focus {
   box-shadow: 0 0 5px rgba(81, 203, 238, 1);
   padding: 3px 0px 3px 3px;
   margin: 5px 1px 3px 0px;
   border: 1px solid rgba(81, 203, 238, 1);
 }
+
+
+
 /* .form-card:before {
   content: ' \25BC';
   display: inline-block;

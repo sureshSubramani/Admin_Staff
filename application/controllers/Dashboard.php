@@ -11,8 +11,8 @@ class Dashboard extends CI_Controller {
 
         $data['title'] = "Admin | Dashboard";
 
-        //$this->load->view('common/header', $data); 
-        $this->load->view('recruitment',$data);
-        //$this->load->view('common/footer');
+        $this->load->view('common/header', $data); 
+        $this->load->view('dashboard',$data);
+        $this->load->view('common/footer');
     }
 }

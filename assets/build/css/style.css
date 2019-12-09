@@ -79,7 +79,7 @@ hr {
     color:#fff;
 }
 .marTop{
-  top:100px;
+  top:20px;
   position: relative;
 }
 .grad {
@@ -242,3 +242,11 @@ input[type=checkbox]#copy_address{
     background: #27AE60;
     color: white;
     }
+
+    .check-ctrl {
+        display: inline-block !important;
+        width: 30% !important;
+        height: calc(1em + .5rem + 2px) !important;
+        position: relative !important;
+        top: 6px !important; 
+      }

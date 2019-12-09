@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Welcome extends CI_Controller {
 	function __construct(){
         parent::__construct();
-		$this->load->model('Staff_model');
-		$this->load->library('session');
+		$this->load->model('recruitment_model');
+		// $this->load->library('session');
 	}
 	
 	public function index(){
@@ -13,7 +13,7 @@ class Welcome extends CI_Controller {
 		$data['success'] = '';
 		$data['title'] = "Welcome Staff";
 
-		$this->load->view('welcome_staff', $data);
+		$this->load->view('recruitment', $data);
 		
 	}
 

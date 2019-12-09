@@ -1,7 +1,5 @@
 <!-- page content -->
 <div class="right_col" role="main">
-
-
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class='text-center marTop'>
@@ -9,8 +7,6 @@
                         class='text-white' title='Click Here!'>Teaching Staff Recuritment</a></button>
             </div>
         </div>
-
     </div>
-
 </div>
 <!-- /page content -->
